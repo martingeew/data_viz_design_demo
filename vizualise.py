@@ -2,6 +2,7 @@ import morethemes as mt
 import matplotlib.pyplot as plt
 import pandas as pd
 from pyfonts import load_font
+from highlight_text import ax_text
 
 mt.set_theme("minimal")
 
@@ -34,6 +35,41 @@ ax.tick_params(axis="both", which="major", labelsize=12.5)  # 25% larger tick la
 ax.grid(True, alpha=0.3)
 ax.spines["top"].set_visible(False)
 ax.spines["right"].set_visible(False)
+
+# Find min and max values for annotations
+min_idx = cpi_data["value"].idxmin()
+max_idx = cpi_data["value"].idxmax()
+min_value = cpi_data["value"].min() * 100  # Convert to percentage
+max_value = cpi_data["value"].max() * 100  # Convert to percentage
+
+# Add highlighted annotations using highlight_text
+# Min value annotation (GFC)
+ax_text(
+    x=pd.Timestamp("2008-01-01"),  # Position to the left of min point
+    y=min_value + 0.5,  # Position above the point
+    s=f"<GFC:> {min_value:.1f}%",
+    highlight_textprops=[{"color": "#D32F2F", "weight": "bold", "font": title_font}],
+    color="#666666",  # Similar to tick mark color
+    fontsize=16.5,  # 50% bigger
+    font=subtitle_font,
+    ha="right",  # Right-align so text flows towards the point
+    va="bottom",
+    ax=ax,
+)
+
+# Max value annotation (Covid)
+ax_text(
+    x=max_idx,
+    y=max_value + 0.3,  # Position closer to the point
+    s=f"<Covid:> {max_value:.1f}%",
+    highlight_textprops=[{"color": "#1976D2", "weight": "bold", "font": title_font}],
+    color="#666666",  # Similar to tick mark color
+    fontsize=16.5,  # 50% bigger
+    font=subtitle_font,
+    ha="center",
+    va="bottom",
+    ax=ax,
+)
 
 # Add stylish title using custom font
 fig.text(
