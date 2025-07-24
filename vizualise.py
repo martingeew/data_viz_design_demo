@@ -30,16 +30,17 @@ ax.plot(
 )
 
 # Customize the plot
+ax.tick_params(axis="both", which="major", labelsize=12.5)  # 25% larger tick labels
 ax.grid(True, alpha=0.3)
 ax.spines["top"].set_visible(False)
 ax.spines["right"].set_visible(False)
 
 # Add stylish title using custom font
 fig.text(
-    0.1,
+    0.05,
     0.95,
     "Consumer Price Index: Total for United States",
-    fontsize=24,
+    fontsize=30,
     font=title_font,
     weight="bold",
     color="#2C3E50",
@@ -47,20 +48,20 @@ fig.text(
 
 # Add subtitle using different font
 fig.text(
-    0.1,
+    0.05,
     0.90,
     "Growth rate same period previous year, Quarterly, Not Seasonally Adjusted",
-    fontsize=14,
+    fontsize=17.5,
     font=subtitle_font,
     color="#7F8C8D",
 )
 
 # Add source attribution
 fig.text(
-    0.9,
+    0.95,
     0.02,
     "Source: FRED",
-    fontsize=10,
+    fontsize=12.5,
     font=subtitle_font,
     color="#95A5A6",
     ha="right",
