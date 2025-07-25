@@ -42,13 +42,26 @@ max_idx = cpi_data["value"].idxmax()
 min_value = cpi_data["value"].min() * 100  # Convert to percentage
 max_value = cpi_data["value"].max() * 100  # Convert to percentage
 
+# Extract quarter information
+min_quarter = f"{min_idx.year}Q{min_idx.quarter}"
+max_quarter = f"{max_idx.year}Q{max_idx.quarter}"
+
+# Add marker points for min and max values
+ax.scatter(min_idx, min_value, color="#D32F2F", s=100, zorder=5)  # GFC marker (red)
+ax.scatter(
+    max_idx, max_value, color="#FF5722", s=100, zorder=5
+)  # Covid marker (orange)
+
 # Add highlighted annotations using highlight_text
 # Min value annotation (GFC)
 ax_text(
     x=pd.Timestamp("2008-01-01"),  # Position to the left of min point
     y=min_value + 0.5,  # Position above the point
-    s=f"<GFC:> {min_value:.1f}%",
-    highlight_textprops=[{"color": "#D32F2F", "weight": "bold", "font": title_font}],
+    s=f"<(GFC)> <{min_quarter}:> {min_value:.1f}%",
+    highlight_textprops=[
+        {"color": "#D32F2F", "weight": "bold", "font": title_font},
+        {"color": "#D32F2F", "weight": "bold", "font": title_font},
+    ],
     color="#666666",  # Similar to tick mark color
     fontsize=16.5,  # 50% bigger
     font=subtitle_font,
@@ -61,8 +74,11 @@ ax_text(
 ax_text(
     x=max_idx,
     y=max_value + 0.3,  # Position closer to the point
-    s=f"<Covid:> {max_value:.1f}%",
-    highlight_textprops=[{"color": "#1976D2", "weight": "bold", "font": title_font}],
+    s=f"<Covid> <{max_quarter}:> {max_value:.1f}%",
+    highlight_textprops=[
+        {"color": "#FF5722", "weight": "bold", "font": title_font},
+        {"color": "#FF5722", "weight": "bold", "font": title_font},
+    ],
     color="#666666",  # Similar to tick mark color
     fontsize=16.5,  # 50% bigger
     font=subtitle_font,
